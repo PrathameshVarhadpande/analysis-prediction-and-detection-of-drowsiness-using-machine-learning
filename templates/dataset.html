@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DAPD - Drowsiness Analysis, Prediction and Detection</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="../static/plugins/fontawesome-free/css/all.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Tempusdominus Bootstrap 4 -->
+  <link rel="stylesheet" href="../static/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+  <!-- iCheck -->
+  <link rel="stylesheet" href="../static/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <!-- JQVMap -->
+  <link rel="stylesheet" href="../static/plugins/jqvmap/jqvmap.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../static/dist/css/adminlte.min.css">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="../static/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+  <!-- Daterange picker -->
+  <link rel="stylesheet" href="../static/plugins/daterangepicker/daterangepicker.css">
+  <!-- summernote -->
+  <link rel="stylesheet" href="../static/plugins/summernote/summernote-bs4.min.css">
+</head>
+<style>
+
+body, html {
+  height: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.bg-image {
+  /* The image used */
+  background-image: url("../static/images/dr.jpg");
+
+  /* Add the blur effect */
+  filter: blur(8px);
+  -webkit-filter: blur(8px);
+
+  /* Full height */
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+  table, th, td {
+    border: 3px solid blue;
+    border-style: inset;
+    border-collapse: collapse;
+  }
+  th, td {
+    padding-top: 10px;
+    padding-bottom: 20px;
+    padding-left: 30px;
+    padding-right: 40px;
+  }
+  </style>
+<body class="hold-transition sidebar-mini layout-fixed">
+  
+  <div class="wrapper">
+
+  
+
+  <!-- Main Sidebar Container -->
+  {% include 'aside.html' %}
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-12">
+            <h1 class="m-0">Drowsiness Analysis, Prediction and Detection
+            <img src="../static/images/dr.jpg" width="60" height="60" /> </h1>
+          </div><!-- /.col -->
+          
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+      
+        <!-- /.row -->
+        <!-- Main row -->
+        <div class="row" >
+          <!-- Left col -->
+          <section class="col-lg-7 connectedSortable">
+            <!-- Custom tabs (Charts with tabs)-->
+            <div class="card" style="height: 650px; width: 1200px;">
+              <div class="card-header">
+                Drowsiness Dataset 
+                <div class="card-tools">
+                
+                </div>
+                
+              </div><!-- /.card-header -->
+              <div class="card-body" >
+                <div class="tab-content p-0">
+                  <!-- Morris chart - Sales -->
+                  <div class="chart tab-pane active" id="revenue-chart"
+                       style="position: relative; height: 600px;">
+                       <p style="font-size: 22px;">
+                        <span style="color: green;">A) For Real Time detection: </span> HaarCascade Frontal Face dataset is used.
+                       </p>
+                       <p style="font-size:22px">
+                        HaarCascade is an Object Detection Algorithm used to identify faces in an image or a real time video. 
+                        The algorithm uses edge or line detection features proposed by Viola and Jones in their research paper 
+                        “Rapid Object Detection using a Boosted Cascade of Simple Features” published in 2001. The algorithm is given a lot 
+                        of positive images consisting of faces, and a lot of negative images not consisting of any face to train on them.
+                      </p>  
+                      <p style="font-size:22px">
+                       Link to the dataset : <a style="color:green;" href="https://github.com/opencv/opencv/blob/master/data/haarcascades/haarcascade_frontalface_default.xml"> HaarCascade Frontal Face Dataset</a>
+                      </p>
+                      <p style="font-size: 22px;">
+                      <span style="color: green;">B) For Machine Learning: </span>
+                      </p>
+                      <p style="font-size:22px">
+                        We have prepared a dataset using the extracted features from the Real Time Detection of Drowsiness.
+                        The extracted features are EAR and MAR.
+                        The dataset contains three columns namely Y, EAR and MAR. The size of dataset is 15,952.
+                        <br/>
+                        We have labeled the data into three categories as <span style="color: red;">0, 5</span> and <span style="color: red;">10</span>. '0' marks as<span style="color: red;"> non-drowsy</span>, '5' marks as <span style="color: red;">medium drowsy</span>
+                        and '10' marks as <span style="color: red;">severe drowsy</span>.
+                        The labelling logic is as follows:
+                        <br/>
+                        If MAR > 20 then Y = 10
+                        <br/>
+                        If MAR < 20 and EAR < 0.25 then Y = 10
+                        <br/>
+                        If MAR < 20 and (EAR >=0.25 and EAR <=0.35) then Y = 5
+                        <br/>
+                        If MAR < 20 and EAR >0.35 then Y = 0 
+                        
+                      </p>
+                      
+                   </div>
+                  <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;">
+                    <canvas id="sales-chart-canvas" height="300" style="height: 300px;"></canvas>
+                  </div>
+                </div>
+              </div><!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+            <!-- DIRECT CHAT -->
+            
+            <!--/.direct-chat -->
+
+            <!-- TO DO List -->
+            
+            <!-- /.card -->
+          </section>
+          <!-- /.Left col -->
+          <!-- right col (We are only adding the ID to make the widgets sortable)-->
+          
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="../static/plugins/jquery/jquery.min.js"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="../static/plugins/jquery-ui/jquery-ui.min.js"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+  $.widget.bridge('uibutton', $.ui.button)
+</script>
+<!-- Bootstrap 4 -->
+<script src="../static/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- ChartJS -->
+<script src="../static/plugins/chart.js/Chart.min.js"></script>
+<!-- Sparkline -->
+<script src="../static/plugins/sparklines/sparkline.js"></script>
+<!-- JQVMap -->
+<script src="../static/plugins/jqvmap/jquery.vmap.min.js"></script>
+<script src="../static/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+<!-- jQuery Knob Chart -->
+<script src="../static/plugins/jquery-knob/jquery.knob.min.js"></script>
+<!-- daterangepicker -->
+<script src="../static/plugins/moment/moment.min.js"></script>
+<script src="../static/plugins/daterangepicker/daterangepicker.js"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="../static/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+<!-- Summernote -->
+<script src="../static/plugins/summernote/summernote-bs4.min.js"></script>
+<!-- overlayScrollbars -->
+<script src="../static/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+<!-- AdminLTE App -->
+<script src="../static/dist/js/adminlte.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="../static/dist/js/demo.js"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="../static/dist/js/pages/dashboard.js"></script>
+</body>
+</html>
