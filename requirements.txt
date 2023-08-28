@@ -1,0 +1,5 @@
+# Install all Python dependencies
+# pip install google-colab
+pip install numpy
+pip install pandas, matplotlib, seaborn, sklearn, keras 
+pip install mlxtend
